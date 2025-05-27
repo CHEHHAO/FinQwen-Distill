@@ -10,13 +10,13 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)s: %(message)s'
 )
 
-sft_data_path = 'data/clean_data/sft_data.json'
-sft_response_path = 'data/clean_data/responses.json'
+sft_data_path = 'data/clean_data/sft_test.json'
+sft_response_path = 'data/generated/responses.json'
 
 with open(sft_data_path, 'r', encoding='utf-8') as f:
     gold_data = json.load(f)
 
-with open('responses.json', 'r', encoding='utf-8') as f:
+with open(sft_response_path, 'r', encoding='utf-8') as f:
     pred_data = json.load(f)
 
 assert len(gold_data) == len(pred_data), "数量不一致：金标准与预测结果条数应相同"
@@ -27,7 +27,7 @@ recalls = []
 f1s = []
 
 for idx, (gold, pred) in enumerate(zip(gold_data, pred_data)):
-    gold_set = set(gold.get('entities', []))
+    gold_set = set(gold.get('response', []))
     pred_set = set(pred)
     true_positive = len(gold_set & pred_set)
     # 避免除零错误
