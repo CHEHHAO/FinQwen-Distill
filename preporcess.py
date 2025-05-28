@@ -45,7 +45,7 @@ def convert_to_examples(raw_list):
         title = item.get('Title', '')
         text = item.get('Content', '')
         entities = item.get('Companies_list', [])
-        entities_str = ', '.join(entities)  # 将列表转换为逗号分隔的字符串
+        entities_str = '| '.join(entities)  # 将列表转换为逗号分隔的字符串
         # 去除字符串左右空白，并保持实体唯一
         entities = list({e.strip() for e in entities if isinstance(e, str)})
         examples.append({
@@ -68,13 +68,13 @@ if __name__ == '__main__':
     # 划分为训练集、验证集、测试集
     # 先分割出测试集（占比10%），再从剩余中分割验证集（占比10%）
     train_val, test_set = train_test_split(examples, test_size=0.1, random_state=42)
-    val_size = 0.1 / 0.9
-    train_set, val_set = train_test_split(train_val, test_size=val_size, random_state=42)
+    # val_size = 0.1 / 0.9
+    # train_set, val_set = train_test_split(train_val, test_size=val_size, random_state=42)
 
     # 保存各划分文件
     splits = {
-        'train': train_set,
-        'validation': val_set,
+        'train': train_val,
+        # 'validation': val_set,
         'test': test_set
     }
     for split_name, data in splits.items():
