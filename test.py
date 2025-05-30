@@ -4,7 +4,6 @@ import transformers
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1, 2, 3"
 os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'max_split_size_mb:64'
 
 

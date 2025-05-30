@@ -38,14 +38,15 @@ def convert_to_examples(raw_list):
     Returns:
         List[dict]: 转换后的例子列表，每个例子包含 title, text, entities。
     """
-    system_prompt = """You are a named-entity recognition assistant. Identify all company names in the following title and text, and output an array of strings, each string being one company name."""
+    system_prompt = """You are a named-entity recognition assistant. Identify all company names in the following title and text, and output an array of strings, each string being one company name, only output company names."""
     examples = []
     for item in raw_list:
         
         title = item.get('Title', '')
         text = item.get('Content', '')
         entities = item.get('Companies_list', [])
-        entities_str = '| '.join(entities)  # 将列表转换为逗号分隔的字符串
+        # entities_str = '| '.join(entities)  # 将列表转换为逗号分隔的字符串
+        entities_str = json.dumps(entities, indent=2)
         # 去除字符串左右空白，并保持实体唯一
         entities = list({e.strip() for e in entities if isinstance(e, str)})
         examples.append({
